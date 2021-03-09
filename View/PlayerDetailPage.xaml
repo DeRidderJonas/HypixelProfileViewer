@@ -1,0 +1,118 @@
+﻿<Page x:Class="Project_DeRidderJonas_HypixelApi.View.PlayerDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:VM="clr-namespace:Project_DeRidderJonas_HypixelApi.ViewModel"
+      xmlns:conv="clr-namespace:Project_DeRidderJonas_HypixelApi.View.Converters"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Project_DeRidderJonas_HypixelApi.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PlayerDetailPage">
+    <Page.Resources>
+      <conv:DateTimeToString x:Key="DateTimeToString"/>
+      <conv:TimeSpanToString x:Key="TimeSpanToString"/>
+      <Style TargetType="TextBlock" x:Key="DisplayName">
+          <Setter Property="FontSize" Value="45"/>
+          <Setter Property="HorizontalAlignment" Value="Left"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="Stats">
+          <Setter Property="FontSize" Value="25"/>
+          <Setter Property="VerticalAlignment" Value="Bottom"/>
+          <Setter Property="Foreground" Value="#fff"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="StatsKey">
+          <Setter Property="FontSize" Value="20"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+          <Setter Property="Foreground" Value="#999"/>
+          <Setter Property="Margin" Value="5 0"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="StatsValue">
+          <Setter Property="FontSize" Value="20"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+          <Setter Property="HorizontalAlignment" Value="Right"/>
+          <Setter Property="Foreground" Value="#999"/>
+          <Setter Property="Margin" Value="5 0"/>
+        </Style>
+        <Style TargetType="Image" x:Key="StatsImg">
+          <Setter Property="Margin" Value="3"/>
+          <Setter Property="HorizontalAlignment" Value="Center"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+    <Page.DataContext>
+      <VM:PlayerDetailVM/>
+    </Page.DataContext>
+    <Grid ShowGridLines="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="2.2*"/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition Width="2*"/>
+          <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+      <!--Player Id-->
+        <Grid ShowGridLines="False" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+          <Rectangle Fill="#888" Grid.ColumnSpan="2" Margin="20" RadiusX="20" RadiusY="20"/>
+          <Rectangle Fill="#000" Margin="43 23 23 23"/>
+          <Image Source="{Binding CurrentPlayer.Face}" Height="128" Margin="20 0 0 0"/>
+        <TextBlock Grid.Column="1" Text="{Binding CurrentPlayer.DisplayName}" Style="{StaticResource DisplayName}"/>
+        <!--TODO: Add online/offline-->
+        </Grid>
+
+        <!--General Stats-->
+        <Grid ShowGridLines="False" Grid.Row="1" Grid.ColumnSpan="4" Margin="20 10">
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+          <TextBlock Text="General statistics" Margin="8" Style="{StaticResource Stats}"/>
+          <Rectangle Fill="#555" Height="5" VerticalAlignment="Bottom" RadiusX="2" RadiusY="2"/>
+            <Grid ShowGridLines="False" Grid.Row="1" Margin="0 5">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="0.2*"/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition Width="1.2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+              <Image Source="/Resources/Images/Calendar.png" Style="{StaticResource StatsImg}"/>
+              <TextBlock Grid.Column="1" Text="First login" Style="{StaticResource StatsKey}"/>
+              <TextBlock Grid.Column="2" Text="{Binding CurrentPlayer.FirstLoginDT, Converter={StaticResource DateTimeToString}}" Style="{StaticResource StatsValue}" />
+              <Image Source="/Resources/Images/Calendar.png" Grid.Row="1" Style="{StaticResource StatsImg}"/>
+              <TextBlock Grid.Row="1" Grid.Column="1" Text="Last login" Style="{StaticResource StatsKey}"/>
+              <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding CurrentPlayer.LastLoginDT, Converter={StaticResource DateTimeToString}}" Style="{StaticResource StatsValue}"/>
+              <Image Source="/Resources/Images/clock.png" Grid.Row="2" Style="{StaticResource StatsImg}"/>
+              <TextBlock Grid.Row="2" Grid.Column="1" Text="Time played" Style="{StaticResource StatsKey}"/>
+              <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding CurrentPlayer.TimePlayedTS, Converter={StaticResource TimeSpanToString}}" Style="{StaticResource StatsValue}"/>
+              <Image Source="/Resources/Images/YinYang.png" Grid.Row="3" Style="{StaticResource StatsImg}"/>
+              <TextBlock Grid.Row="3" Grid.Column="1" Text="Karma" Style="{StaticResource StatsKey}"/>
+              <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding CurrentPlayer.Karma}" Style="{StaticResource StatsValue}"/>
+              <Image Source="/Resources/Images/achievementSmall.png" Grid.Row="4" Style="{StaticResource StatsImg}"/>
+              <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="Achievement points" Style="{StaticResource StatsKey}"/>
+              <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding CurrentPlayer.AchievementPoints}" Style="{StaticResource StatsValue}"/>
+              <Image Source="/Resources/Images/ExperienceOrb.png" Grid.Row="5" Style="{StaticResource StatsImg}"/>
+              <TextBlock Grid.Row="5" Grid.Column="1" Text="Level" Style="{StaticResource StatsKey}"/>
+              <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding CurrentPlayer.CurrentNetworkLevel}" Style="{StaticResource StatsValue}" HorizontalAlignment="Left"/>
+              <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding CurrentPlayer.NextNetworkLevel}" Style="{StaticResource StatsValue}"/>
+              <ProgressBar Grid.Row="5" Grid.Column="2" Width="165" Height="15" Value="{Binding CurrentPlayer.LevelExperiencePercentage, Mode=OneWay}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
