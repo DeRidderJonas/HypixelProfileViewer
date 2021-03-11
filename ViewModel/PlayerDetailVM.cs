@@ -22,15 +22,12 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
 
         public PlayerDetailVM()
         {
-            var taskResult = Task.Run(() =>
-            {
-                return _hypixelRepository.GetPlayerInfoAsync();
-            });
+            InitializeValues();
+        }
 
-            taskResult.ConfigureAwait(true).GetAwaiter()
-                .OnCompleted(() => { 
-                    CurrentPlayer = taskResult.Result; 
-                });
+        private async void InitializeValues()
+        {
+            CurrentPlayer = await _hypixelRepository.GetPlayerInfoAsync();
         }
     }
 }
