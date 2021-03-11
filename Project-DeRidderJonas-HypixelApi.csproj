@@ -77,6 +77,8 @@
     <Compile Include="Repository\HypixelRepositoryFile.cs" />
     <Compile Include="Repository\IHypixelRepository.cs" />
     <Compile Include="ViewModel\PlayerDetailVM.cs" />
+    <Compile Include="View\Converters\BoolToOnlineImage.cs" />
+    <Compile Include="View\Converters\BoolToOnlineString.cs" />
     <Compile Include="View\Converters\DateTimeToString.cs" />
     <Compile Include="View\Converters\TimeSpanToString.cs" />
     <Compile Include="View\PlayerDetailPage.xaml.cs">
@@ -141,6 +143,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Offline.png" />
+    <Resource Include="Resources\Images\Online.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Arcade.png" />
+    <Resource Include="Resources\Images\HungerGames.png" />
+    <Resource Include="Resources\Images\Paintball.png" />
+    <Resource Include="Resources\Images\Quake.png" />
+    <Resource Include="Resources\Images\SkyWars.png" />
+    <Resource Include="Resources\Images\TNTGames.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

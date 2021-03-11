@@ -12,10 +12,18 @@
     <Page.Resources>
       <conv:DateTimeToString x:Key="DateTimeToString"/>
       <conv:TimeSpanToString x:Key="TimeSpanToString"/>
+      <conv:BoolToOnlineImage x:Key="BoolToOnlineImage"/>
+      <conv:BoolToOnlineString x:Key="BoolToOnlineString"/>
       <Style TargetType="TextBlock" x:Key="DisplayName">
           <Setter Property="FontSize" Value="45"/>
           <Setter Property="HorizontalAlignment" Value="Left"/>
           <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="PlayerName">
+          <Setter Property="FontSize" Value="15"/>
+          <Setter Property="HorizontalAlignment" Value="Right"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+          <Setter Property="Foreground" Value="#333"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="Stats">
           <Setter Property="FontSize" Value="25"/>
@@ -45,20 +53,20 @@
       <VM:PlayerDetailVM/>
     </Page.DataContext>
     <Grid ShowGridLines="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="2.2*"/>
-          <ColumnDefinition/>
-          <ColumnDefinition/>
-          <ColumnDefinition/>
-          <ColumnDefinition Width="2*"/>
-          <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-      <!--Player Id-->
-        <Grid ShowGridLines="True" Grid.ColumnSpan="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2.2*"/>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+        <ColumnDefinition Width="2*"/>
+        <ColumnDefinition Width="2*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition Height="2*"/>
+      </Grid.RowDefinitions>
+        <!--Player Id-->
+        <Grid ShowGridLines="False" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition Width="1.2*"/>
@@ -69,10 +77,24 @@
               <Image Source="{Binding CurrentPlayer.Face}" Stretch="UniformToFill"/>
 
             </Border>
-            <Viewbox Grid.Column="1" Margin="20">
-              <TextBlock  Text="{Binding CurrentPlayer.DisplayName}" Style="{StaticResource DisplayName}" Margin="0 0 15 0"/>
+            <Viewbox Grid.Column="1" Margin="10 20">
+                <Grid ShowGridLines="False" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                    </Grid.RowDefinitions>
+                  <TextBlock Grid.Row="0" Text="{Binding CurrentPlayer.PlayerName}" 
+                             Style="{StaticResource PlayerName}" Margin="0 0 15 0"/>
+                  <TextBlock Grid.Row="1" Text="{Binding CurrentPlayer.DisplayName}" 
+                             Style="{StaticResource DisplayName}" Margin="0 0 15 0"/>
+                  <Image Grid.Row="2" MaxHeight="15" Margin="60 0" HorizontalAlignment="Right" 
+                         Source="{Binding CurrentPlayer.IsOnline, Converter={StaticResource BoolToOnlineImage}, FallbackValue=/Resources/Images/Offline.png}"/>
+                  <TextBlock Grid.Row="2" HorizontalAlignment="Right" Margin="20 0" 
+                             Foreground="red" 
+                             Text="{Binding CurrentPlayer.IsOnline, Converter={StaticResource BoolToOnlineString}, FallbackValue=Offline}"/>
+                </Grid>
             </Viewbox>
-        <!--TODO: Add online/offline-->
         </Grid>
 
         <!--General Stats-->
@@ -114,7 +136,7 @@
               <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding CurrentPlayer.AchievementPoints}" Style="{StaticResource StatsValue}"/>
               <Image Source="/Resources/Images/ExperienceOrb.png" Grid.Row="5" Style="{StaticResource StatsImg}"/>
               <TextBlock Grid.Row="5" Grid.Column="1" Text="Level" Style="{StaticResource StatsKey}"/>
-                <Grid Grid.Row="5" Grid.Column="2" ShowGridLines="True">
+                <Grid Grid.Row="5" Grid.Column="2" ShowGridLines="False">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition/>
                       <ColumnDefinition Width="5*"/>
@@ -126,5 +148,8 @@
                 </Grid>
             </Grid>
         </Grid>
+
+        
+
     </Grid>
 </Page>

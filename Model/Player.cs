@@ -17,7 +17,14 @@ namespace Project_DeRidderJonas_HypixelApi.Model
         public string DisplayName { get; set; }
         [JsonProperty(PropertyName ="playername")]
         public string PlayerName { get; set; }
+        [JsonProperty(PropertyName ="karma")]
+        public int Karma { get; set; }
+        [JsonProperty(PropertyName = "achievementPoints")]
+        public int AchievementPoints { get; set; }
+        [JsonIgnore]
+        public bool IsOnline { get; set; }
 
+        //Login Data
         [JsonProperty(PropertyName = "firstLogin")]
         public long FirstLogin { get; set; }
         [JsonIgnore]
@@ -42,11 +49,7 @@ namespace Project_DeRidderJonas_HypixelApi.Model
                 return new TimeSpan(0, TimePlayed, 0);
             } 
         }
-
-        [JsonProperty(PropertyName ="karma")]
-        public int Karma { get; set; }
-        [JsonProperty(PropertyName = "achievementPoints")]
-        public int AchievementPoints { get; set; }
+        //Experience
         [JsonProperty(PropertyName = "networkExp")]
         public double NetworkExperience { get; set; }
 
