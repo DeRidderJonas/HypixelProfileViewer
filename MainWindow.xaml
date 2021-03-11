@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project_DeRidderJonas_HypixelApi"
         mc:Ignorable="d"
-        Title="MainWindow" Background="#333" Height="600" Width="1000">
+        Title="MainWindow" Background="#333" MinHeight="450" Height="600" MinWidth="750" Width="1000">
     <Window.Content>
       <view:PlayerDetailPage/>
     </Window.Content>

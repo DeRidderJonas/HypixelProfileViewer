@@ -58,15 +58,20 @@
           <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
       <!--Player Id-->
-        <Grid ShowGridLines="False" Grid.ColumnSpan="3">
+        <Grid ShowGridLines="True" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition Width="1.2*"/>
             </Grid.ColumnDefinitions>
           <Rectangle Fill="#888" Grid.ColumnSpan="2" Margin="20" RadiusX="20" RadiusY="20"/>
-          <Rectangle Fill="#000" Margin="43 23 23 23"/>
-          <Image Source="{Binding CurrentPlayer.Face}" Height="128" Margin="20 0 0 0"/>
-        <TextBlock Grid.Column="1" Text="{Binding CurrentPlayer.DisplayName}" Style="{StaticResource DisplayName}"/>
+          <!--<Rectangle Fill="#000" Margin="40"/>-->
+            <Border Background="#000" Margin="40" BorderBrush="#fff" BorderThickness="5">
+              <Image Source="{Binding CurrentPlayer.Face}" Stretch="UniformToFill"/>
+
+            </Border>
+            <Viewbox Grid.Column="1" Margin="20">
+              <TextBlock  Text="{Binding CurrentPlayer.DisplayName}" Style="{StaticResource DisplayName}" Margin="0 0 15 0"/>
+            </Viewbox>
         <!--TODO: Add online/offline-->
         </Grid>
 
@@ -109,9 +114,16 @@
               <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding CurrentPlayer.AchievementPoints}" Style="{StaticResource StatsValue}"/>
               <Image Source="/Resources/Images/ExperienceOrb.png" Grid.Row="5" Style="{StaticResource StatsImg}"/>
               <TextBlock Grid.Row="5" Grid.Column="1" Text="Level" Style="{StaticResource StatsKey}"/>
-              <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding CurrentPlayer.CurrentNetworkLevel}" Style="{StaticResource StatsValue}" HorizontalAlignment="Left"/>
-              <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding CurrentPlayer.NextNetworkLevel}" Style="{StaticResource StatsValue}"/>
-              <ProgressBar Grid.Row="5" Grid.Column="2" Width="165" Height="15" Value="{Binding CurrentPlayer.LevelExperiencePercentage, Mode=OneWay}"/>
+                <Grid Grid.Row="5" Grid.Column="2" ShowGridLines="True">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition/>
+                      <ColumnDefinition Width="5*"/>
+                      <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                      <TextBlock Grid.Column="0" Text="{Binding CurrentPlayer.CurrentNetworkLevel}" Style="{StaticResource StatsValue}" HorizontalAlignment="Left"/>
+                      <TextBlock Grid.Column="2" Text="{Binding CurrentPlayer.NextNetworkLevel}" Style="{StaticResource StatsValue}"/>
+                      <ProgressBar Grid.Column="1" HorizontalAlignment="Stretch" Margin="0 15" Value="{Binding CurrentPlayer.LevelExperiencePercentage, Mode=OneWay}"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
