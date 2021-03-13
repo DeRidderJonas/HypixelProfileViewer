@@ -86,6 +86,7 @@
     <Compile Include="Model\TNTGamesStatistics.cs" />
     <Compile Include="Repository\GameModeRepository.cs" />
     <Compile Include="Repository\HypixelRepositoryFile.cs" />
+    <Compile Include="Repository\HypixelRepositoryWeb.cs" />
     <Compile Include="Repository\IHypixelRepository.cs" />
     <Compile Include="ViewModel\LeaderboardVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

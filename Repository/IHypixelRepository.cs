@@ -9,7 +9,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
 {
     interface IHypixelRepository
     {
-        Task<Player> GetPlayerInfoAsync();
+        Task<Player> GetPlayerInfoAsync(string uuid);
         Task<IGameModeStatistics> GetStatisticsForGameMode(GameMode gameMode);
         Task<Leaderboard> GetLeaderboardForGameMode(GameMode gameMode);
     }

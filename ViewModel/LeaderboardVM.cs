@@ -12,7 +12,7 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
 {
     class LeaderboardVM : ViewModelBase
     {
-        private IHypixelRepository _hypixelRepository = new HypixelRepositoryFile();
+        private IHypixelRepository _hypixelRepository = new HypixelRepositoryWeb();
 
         public List<GameMode> GameModes { get; } = GameModeRepository.GetGameModes();
 

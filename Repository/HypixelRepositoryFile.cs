@@ -17,6 +17,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
         static private string _onlineJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.HypixelOnline.json";
         static private string _leaderboardJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.Leaderboards.json";
 
+        private string _uuid;
         private Player _currentPlayer;
         private List<IGameModeStatistics> _gameModeStats;
         private List<Leaderboard> _leaderboards;
@@ -40,7 +41,6 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
                     _leaderboards = gameModes.Select(gameMode =>
                     {
                         var leaderboardJson = leaderboards.SelectToken($"{gameMode.LeaderboardName}[0].leaders");
-                        //var leadersJson = leaderboardJson.SelectToken("leaders");
                         var leaders = leaderboardJson.ToList();
 
                         var leadersPlayerIds = leaders.Select(leader => new PlayerId() { Uuid = leader.ToObject<string>() }).ToList();
@@ -60,9 +60,11 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
             return _leaderboards.Where(leaderboard => leaderboard.GameMode == gameMode).FirstOrDefault();
         }
 
-        public async Task<Player> GetPlayerInfoAsync()
+        public async Task<Player> GetPlayerInfoAsync(string uuid)
         {
             if (_currentPlayer != null) return _currentPlayer;
+
+            _uuid = uuid;
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
@@ -113,7 +115,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
 
         public async Task<IGameModeStatistics> GetStatisticsForGameMode(GameMode gameMode)
         {
-            if (_currentPlayer == null) await GetPlayerInfoAsync();
+            if (_currentPlayer == null) await GetPlayerInfoAsync(_uuid);
 
             return _gameModeStats.Where(stat => stat.GameMode == gameMode).FirstOrDefault();
         }
