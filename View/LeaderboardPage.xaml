@@ -43,9 +43,19 @@
         </ListBox>
       <Rectangle Grid.Column="1" Grid.RowSpan="2" Fill="#aaa" 
                  Width="2" HorizontalAlignment="Left"/>
-        <Viewbox Grid.Column="1">
-          <TextBlock Text="{Binding SelectedGameMode.DisplayName}" Style="{StaticResource GameModeTitle}"/>
-        </Viewbox>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="9*"/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+          <Viewbox>
+            <TextBlock Text="{Binding SelectedGameMode.DisplayName}" Style="{StaticResource GameModeTitle}"/>
+          </Viewbox>
+            <Button Grid.Column="1" Margin="8 5 8 2" BorderThickness="0"
+                    Command="{Binding OnPlayerSelectedCommand}" CommandParameter="746b0410b2e347e7ad05a5473d35c097">
+              <Image Margin="5" Source="https://cravatar.eu/avatar/assyrial64"/>
+            </Button>
+        </Grid>
         <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CurrentLeaderboard.Players}"
                Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
