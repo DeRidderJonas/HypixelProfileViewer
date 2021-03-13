@@ -14,6 +14,7 @@
       <conv:TimeSpanToString x:Key="TimeSpanToString"/>
       <conv:BoolToOnlineImage x:Key="BoolToOnlineImage"/>
       <conv:BoolToOnlineString x:Key="BoolToOnlineString"/>
+      <conv:BoolToColor x:Key="BoolToColor"/>
       <Style TargetType="TextBlock" x:Key="DisplayName">
           <Setter Property="FontSize" Value="45"/>
           <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -44,9 +45,33 @@
           <Setter Property="Margin" Value="5 0"/>
         </Style>
         <Style TargetType="Image" x:Key="StatsImg">
-          <Setter Property="Margin" Value="3"/>
+          <Setter Property="Margin" Value="5"/>
           <Setter Property="HorizontalAlignment" Value="Center"/>
           <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="GameModeDisplayName">
+          <Setter Property="Foreground" Value="#ddd"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="GameModeStatKey">
+          <Setter Property="FontSize" Value="20"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+          <Setter Property="Foreground" Value="#eee"/>
+          <Setter Property="Margin" Value="5 0"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="GameModeStatValue">
+          <Setter Property="FontSize" Value="22"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+          <Setter Property="Foreground" Value="#eee"/>
+          <Setter Property="HorizontalAlignment" Value="Right"/>
+          <Setter Property="Margin" Value="20 0"/>
+        </Style>
+        <Style TargetType="Rectangle" x:Key="GameModeStatUnderline">
+          <Setter Property="VerticalAlignment" Value="Bottom"/>
+          <Setter Property="Height" Value="3"/>
+          <Setter Property="Margin" Value="5 0"/>
+          <Setter Property="RadiusX" Value="2"/>
+          <Setter Property="RadiusY" Value="2"/>
+          <Setter Property="Fill" Value="#777"/>
         </Style>
     </Page.Resources>
     <Page.DataContext>
@@ -77,7 +102,7 @@
               <Image Source="{Binding CurrentPlayer.Face}" Stretch="UniformToFill"/>
 
             </Border>
-            <Viewbox Grid.Column="1" Margin="10 20">
+            <Viewbox Grid.Column="1" Margin="10 20 20 20">
                 <Grid ShowGridLines="False" VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
                       <RowDefinition/>
@@ -90,8 +115,8 @@
                              Style="{StaticResource DisplayName}" Margin="0 0 15 0"/>
                   <Image Grid.Row="2" MaxHeight="15" Margin="60 0" HorizontalAlignment="Right" 
                          Source="{Binding CurrentPlayer.IsOnline, Converter={StaticResource BoolToOnlineImage}, FallbackValue=/Resources/Images/Offline.png}"/>
-                  <TextBlock Grid.Row="2" HorizontalAlignment="Right" Margin="20 0" 
-                             Foreground="red" 
+                  <TextBlock Grid.Row="2" HorizontalAlignment="Right" Margin="20 0"
+                             Foreground="{Binding CurrentPlayer.IsOnline, Converter={StaticResource BoolToColor}, FallbackValue=Red}" 
                              Text="{Binding CurrentPlayer.IsOnline, Converter={StaticResource BoolToOnlineString}, FallbackValue=Offline}"/>
                 </Grid>
             </Viewbox>
@@ -136,7 +161,9 @@
               <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding CurrentPlayer.AchievementPoints}" Style="{StaticResource StatsValue}"/>
               <Image Source="/Resources/Images/ExperienceOrb.png" Grid.Row="5" Style="{StaticResource StatsImg}"/>
               <TextBlock Grid.Row="5" Grid.Column="1" Text="Level" Style="{StaticResource StatsKey}"/>
-                <Grid Grid.Row="5" Grid.Column="2" ShowGridLines="False">
+                <Grid Grid.Row="5" Grid.Column="1" 
+                      HorizontalAlignment="Right" Grid.ColumnSpan="2" 
+                      ShowGridLines="False" MinWidth="250">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition/>
                       <ColumnDefinition Width="5*"/>
@@ -149,7 +176,79 @@
             </Grid>
         </Grid>
 
-        
+        <!--Game stats-->
+        <Border Grid.Column="4" Grid.ColumnSpan="2" Grid.RowSpan="2" 
+                Margin="20 20"
+                Background="#444" BorderBrush="#111" BorderThickness="3">
+            <Grid ShowGridLines="False">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="2*"/>
+                  <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                  <ListBox ItemsSource="{Binding GameModes}" Background="Transparent" BorderThickness="0"
+                           ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectedItem="{Binding SelectedGameMode}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ShowGridLines="False" MaxHeight="160" MaxWidth="80">
+                                <Grid.RowDefinitions>
+                                  <RowDefinition/>
+                                  <RowDefinition/>
+                                </Grid.RowDefinitions>
+                              <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                              <TextBlock Text="{Binding ShortName}" Grid.Row="1" Foreground="#eee" HorizontalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                  </ListBox>
+                  <Grid Grid.Row="1" ShowGridLines="False">
+                    <Grid.RowDefinitions>
+                      <RowDefinition/>
+                      <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Margin="5 0">
+                        <Grid>
+                          <Rectangle Fill="#222" Height="2" VerticalAlignment="Bottom" RadiusX="2" RadiusY="2"/>
+                          <TextBlock Style="{StaticResource GameModeDisplayName}" Text="{Binding GameModeStatistics.GameMode.DisplayName, FallbackValue=(GameMode Display name)}"/>
+                        </Grid>
+                    </Viewbox>
+                    <Grid Grid.Row="1" Margin="0 20" ShowGridLines="False">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition/>
+                          <ColumnDefinition Width="3*"/>
+                          <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                          <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Source="/Resources/Images/Kill.png" Style="{StaticResource StatsImg}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource GameModeStatKey}" Text="Kills"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource GameModeStatValue}" Text="{Binding GameModeStatistics.Kills}"/>
+                        <Rectangle Grid.ColumnSpan="3" Style="{StaticResource GameModeStatUnderline}"/>
 
+                        <Image Grid.Row="1" Source="/Resources/Images/Death.png" Style="{StaticResource StatsImg}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource GameModeStatKey}" Text="Deaths"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource GameModeStatValue}" Text="{Binding GameModeStatistics.Deaths}"/>
+                        <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Style="{StaticResource GameModeStatUnderline}"/>
+
+                        <Image Grid.Row="2" Source="/Resources/Images/Coin.png" Style="{StaticResource StatsImg}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource GameModeStatKey}" Text="Coins"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource GameModeStatValue}" Text="{Binding GameModeStatistics.Coins}"/>
+                        <Rectangle Grid.Row="2" Grid.ColumnSpan="3" Style="{StaticResource GameModeStatUnderline}"/>
+
+                        <Image Grid.Row="3" Source="/Resources/Images/Win.png" Style="{StaticResource StatsImg}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource GameModeStatKey}" Text="Wins"/>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource GameModeStatValue}" Text="{Binding GameModeStatistics.Wins}"/>
+                    </Grid>
+                  </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

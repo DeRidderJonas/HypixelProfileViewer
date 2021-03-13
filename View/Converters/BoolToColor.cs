@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
 
 namespace Project_DeRidderJonas_HypixelApi.View.Converters
 {
-    class BoolToOnlineImage : IValueConverter
+    class BoolToColor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool isOnline = (bool)value;
 
-            if (isOnline) return new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Online.png", UriKind.Absolute));
-            else return new BitmapImage(new Uri("pack://application:,,,/Resources/Images/Offline.png", UriKind.Absolute));
+            if (isOnline) return "LightGreen";
+            else return "Red";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
