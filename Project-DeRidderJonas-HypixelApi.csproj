@@ -77,8 +77,10 @@
     <Compile Include="Model\GameMode.cs" />
     <Compile Include="Model\HungerGamesStatistics.cs" />
     <Compile Include="Model\IGameModeStatistics.cs" />
+    <Compile Include="Model\Leaderboard.cs" />
     <Compile Include="Model\PaintballStatistics.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PlayerId.cs" />
     <Compile Include="Model\QuakeStatistics.cs" />
     <Compile Include="Model\SkyWarsStatistics.cs" />
     <Compile Include="Model\Temp.cs" />
@@ -86,12 +88,17 @@
     <Compile Include="Repository\GameModeRepository.cs" />
     <Compile Include="Repository\HypixelRepositoryFile.cs" />
     <Compile Include="Repository\IHypixelRepository.cs" />
+    <Compile Include="ViewModel\LeaderboardVM.cs" />
     <Compile Include="ViewModel\PlayerDetailVM.cs" />
     <Compile Include="View\Converters\BoolToColor.cs" />
     <Compile Include="View\Converters\BoolToOnlineImage.cs" />
     <Compile Include="View\Converters\BoolToOnlineString.cs" />
     <Compile Include="View\Converters\DateTimeToString.cs" />
     <Compile Include="View\Converters\TimeSpanToString.cs" />
+    <Compile Include="View\Converters\UuidToImage.cs" />
+    <Compile Include="View\LeaderboardPage.xaml.cs">
+      <DependentUpon>LeaderboardPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PlayerDetailPage.xaml.cs">
       <DependentUpon>PlayerDetailPage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +114,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\LeaderboardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PlayerDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +148,7 @@
     </None>
     <EmbeddedResource Include="Resources\Data\HypixelUser.json" />
     <EmbeddedResource Include="Resources\Data\HypixelOnline.json" />
+    <EmbeddedResource Include="Resources\Data\Leaderboards.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -175,6 +187,9 @@
     <Resource Include="Resources\Images\Coin.png" />
     <Resource Include="Resources\Images\Death.png" />
     <Resource Include="Resources\Images\Win.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\steve.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

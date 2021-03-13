@@ -11,12 +11,12 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
     {
         private static List<GameMode> _gameModes = new List<GameMode>()
             {
-                new GameMode(){DisplayName="Blitz Survival Games", Name="HungerGames", ShortName="Hunger Games"},
-                new GameMode(){DisplayName="Arcade", Name="Arcade", ShortName="Arcade"},
-                new GameMode(){DisplayName="Paintball", Name="Paintball", ShortName="Paintball"},
-                new GameMode(){DisplayName="QuakeCraft", Name="Quake", ShortName="Quake"},
-                new GameMode(){DisplayName="SkyWars", Name="SkyWars", ShortName="SkyWars"},
-                new GameMode(){DisplayName="TNT Games", Name="TNTGames", ShortName="TNT Games"}
+                new GameMode(){DisplayName="Blitz Survival Games", Name="HungerGames", ShortName="Hunger Games", LeaderboardName="SURVIVAL_GAMES"},
+                new GameMode(){DisplayName="Arcade", Name="Arcade", ShortName="Arcade", LeaderboardName="ARCADE"},
+                new GameMode(){DisplayName="Paintball", Name="Paintball", ShortName="Paintball", LeaderboardName="PAINTBALL"},
+                new GameMode(){DisplayName="QuakeCraft", Name="Quake", ShortName="Quake", LeaderboardName="QUAKECRAFT"},
+                new GameMode(){DisplayName="SkyWars", Name="SkyWars", ShortName="SkyWars", LeaderboardName="SKYWARS"},
+                new GameMode(){DisplayName="TNT Games", Name="TNTGames", ShortName="TNT Games", LeaderboardName="TNTGAMES"}
             };
 
         public static List<GameMode> GetGameModes()

@@ -12,11 +12,53 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
 {
     class HypixelRepositoryFile : IHypixelRepository
     {
+
         static private string _playerJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.HypixelUser.json";
         static private string _onlineJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.HypixelOnline.json";
+        static private string _leaderboardJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.Leaderboards.json";
 
         private Player _currentPlayer;
         private List<IGameModeStatistics> _gameModeStats;
+        private List<Leaderboard> _leaderboards;
+
+
+        public async Task<List<Leaderboard>> GetLeaderboards()
+        {
+            if (_leaderboards != null) return _leaderboards;
+
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            using(Stream stream = assembly.GetManifestResourceStream(_leaderboardJsonResourceName))
+            {
+                using(var reader = new StreamReader(stream))
+                {
+                    string json = await reader.ReadToEndAsync();
+                    var result = JsonConvert.DeserializeObject<JObject>(json);
+                    var leaderboards = result.SelectToken("leaderboards");
+
+                    var gameModes = GameModeRepository.GetGameModes();
+                    _leaderboards = gameModes.Select(gameMode =>
+                    {
+                        var leaderboardJson = leaderboards.SelectToken($"{gameMode.LeaderboardName}[0].leaders");
+                        //var leadersJson = leaderboardJson.SelectToken("leaders");
+                        var leaders = leaderboardJson.ToList();
+
+                        var leadersPlayerIds = leaders.Select(leader => new PlayerId() { Uuid = leader.ToObject<string>() }).ToList();
+                        
+                        return new Leaderboard() { Players = leadersPlayerIds, GameMode = gameMode };
+                    }).ToList();
+
+                    return _leaderboards;
+                }
+            }
+        }
+
+        public async Task<Leaderboard> GetLeaderboardForGameMode(GameMode gameMode)
+        {
+            if (_leaderboards == null) await GetLeaderboards();
+
+            return _leaderboards.Where(leaderboard => leaderboard.GameMode == gameMode).FirstOrDefault();
+        }
 
         public async Task<Player> GetPlayerInfoAsync()
         {
@@ -75,5 +117,6 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
 
             return _gameModeStats.Where(stat => stat.GameMode == gameMode).FirstOrDefault();
         }
+
     }
 }

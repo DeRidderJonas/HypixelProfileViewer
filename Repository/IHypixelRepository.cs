@@ -11,5 +11,6 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
     {
         Task<Player> GetPlayerInfoAsync();
         Task<IGameModeStatistics> GetStatisticsForGameMode(GameMode gameMode);
+        Task<Leaderboard> GetLeaderboardForGameMode(GameMode gameMode);
     }
 }

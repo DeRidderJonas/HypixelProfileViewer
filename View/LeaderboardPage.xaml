@@ -1,0 +1,75 @@
+﻿<Page x:Class="Project_DeRidderJonas_HypixelApi.View.LeaderboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:VM="clr-namespace:Project_DeRidderJonas_HypixelApi.ViewModel"
+      xmlns:conv="clr-namespace:Project_DeRidderJonas_HypixelApi.View.Converters"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Project_DeRidderJonas_HypixelApi.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LeaderboardPage">
+    <Page.DataContext>
+      <VM:LeaderboardVM/>
+    </Page.DataContext>
+
+    <Page.Resources>
+      <conv:UuidToImage x:Key="UuidToImage"/>
+      <Style TargetType="TextBlock" x:Key="GameModeTitle">
+          <Setter Property="Foreground" Value="#ccc"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding GameModes}" Background="Transparent" BorderThickness="0" 
+                 SelectedItem="{Binding SelectedGameMode}" HorizontalAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                      <Image Source="{Binding Image}" Stretch="UniformToFill"/>
+                      <Rectangle Fill="#888" Height="3" VerticalAlignment="Bottom" Margin="0 0 0 -1"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+      <Rectangle Grid.Column="1" Grid.RowSpan="2" Fill="#aaa" 
+                 Width="2" HorizontalAlignment="Left"/>
+        <Viewbox Grid.Column="1">
+          <TextBlock Text="{Binding SelectedGameMode.DisplayName}" Style="{StaticResource GameModeTitle}"/>
+        </Viewbox>
+        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CurrentLeaderboard.Players}"
+               Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="#555" CornerRadius="10">
+                      <Grid ShowGridLines="False" Margin="10" HorizontalAlignment="Stretch" >
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition/>
+                          <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image MinWidth="100" MinHeight="100" Source="{Binding Uuid, Converter={StaticResource UuidToImage}, FallbackValue=/Resources/Images/steve.png}"/>
+                        <Viewbox Grid.Column="1" Margin="10">
+                          <TextBlock  Text="{Binding DisplayName}" HorizontalAlignment="Stretch"/>
+                        </Viewbox>
+                      </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+
+    </Grid>
+</Page>

@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Background="#333" MinHeight="450" Height="650" MinWidth="750" Width="1000">
     <Window.Content>
-      <view:PlayerDetailPage/>
+      <view:LeaderboardPage/>
     </Window.Content>
 </Window>

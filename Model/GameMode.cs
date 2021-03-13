@@ -12,6 +12,7 @@ namespace Project_DeRidderJonas_HypixelApi.Model
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string ShortName { get; set; }
+        public string LeaderboardName { get; set; }
 
         public BitmapImage Image { get {
                 return new BitmapImage(new Uri($"pack://application:,,,/Resources/Images/{Name}.png"));    
