@@ -33,23 +33,18 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
 
                     string json = await response.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<JObject>(json);
-                    var leaderboards = result.SelectToken("leaderboards");
+                    var leaderboardsJson = result.SelectToken("leaderboards");
 
                     var gameModes = GameModeRepository.GetGameModes();
-                    _leaderboards = gameModes.Select(gm =>
-                    {
-                        var leaderboardJson = leaderboards.SelectToken($"{gm.LeaderboardName}[0].leaders");
-                        var leaders = leaderboardJson.ToList();
 
-                        var leaderPlayerIds = leaders.Select(leader =>
-                        {
-                            //string playerName = GetPlayerName(leader.ToObject<string>()).Result;
-                            PlayerId playerId = new PlayerId() { Name = "", Uuid = leader.ToObject<string>() };
-                            return playerId;
-                        }).ToList();
+                    List<Task<Leaderboard>> leaderboardTasks = new List<Task<Leaderboard>>();
+                    gameModes.ForEach(gameMode => leaderboardTasks.Add(GetLeaderboard(leaderboardsJson, gameMode)));
 
-                        return new Leaderboard() { GameMode = gm, Players = leaderPlayerIds };
-                    }).ToList();
+                    await Task.WhenAll(leaderboardTasks);
+                    List<Leaderboard> leaderboards = new List<Leaderboard>();
+                    leaderboardTasks.ForEach(task => leaderboards.Add(task.Result));
+
+                    _leaderboards = leaderboards;
 
                     return _leaderboards;
                 }
@@ -59,6 +54,27 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
                     throw;
                 }
             }
+        }
+
+        private async Task<Leaderboard> GetLeaderboard(JToken leaderboardsJson, GameMode gm)
+        {
+            var leaderboardJson = leaderboardsJson.SelectToken($"{gm.LeaderboardName}[0].leaders");
+            var leaders = leaderboardJson.ToList();
+
+            List<Task<PlayerId>> playerIdTasks = new List<Task<PlayerId>>();
+            leaders.ForEach(leader => playerIdTasks.Add(GetPlayerId(leader.ToObject<string>())));
+
+            await Task.WhenAll(playerIdTasks);
+            List<PlayerId> leaderPlayerIds = new List<PlayerId>();
+            playerIdTasks.ForEach(task => leaderPlayerIds.Add(task.Result));
+
+            return new Leaderboard() { GameMode = gm, Players = leaderPlayerIds };
+        }
+
+        private async Task<PlayerId> GetPlayerId(string uuid)
+        {
+            string playerName = await GetPlayerName(uuid);
+            return new PlayerId() { Name = playerName, Uuid = uuid };
         }
 
         public async Task<Leaderboard> GetLeaderboardForGameMode(GameMode gameMode)
