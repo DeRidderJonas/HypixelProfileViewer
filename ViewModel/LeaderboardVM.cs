@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using Project_DeRidderJonas_HypixelApi.Model;
 using Project_DeRidderJonas_HypixelApi.Repository;
 using System;
@@ -29,6 +30,8 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             set { _currentLeaderboard = value; RaisePropertyChanged("CurrentLeaderboard"); }
         }
 
+        public string UUID { get; set; }
+
         public LeaderboardVM()
         {
             _selectedGameMode = GameModes[0];
@@ -43,6 +46,21 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
         private async void UpdateLeaderboard()
         {
             CurrentLeaderboard = await _hypixelRepository.GetLeaderboardForGameMode(_selectedGameMode);
+        }
+
+        private RelayCommand<string> _onPlayerSelectedCommand;
+
+        public RelayCommand<string> OnPlayerSelectedCommand {
+            get {
+                if (_onPlayerSelectedCommand == null) _onPlayerSelectedCommand = new RelayCommand<string>(OnPlayerSelectionChanged);
+                return _onPlayerSelectedCommand;
+            }
+        }
+
+        private void OnPlayerSelectionChanged(string uuid)
+        {
+            UUID = uuid;
+            (App.Current.MainWindow.DataContext as MainViewModel)?.SwitchPage();
         }
     }
 }

@@ -83,12 +83,12 @@
     <Compile Include="Model\PlayerId.cs" />
     <Compile Include="Model\QuakeStatistics.cs" />
     <Compile Include="Model\SkyWarsStatistics.cs" />
-    <Compile Include="Model\Temp.cs" />
     <Compile Include="Model\TNTGamesStatistics.cs" />
     <Compile Include="Repository\GameModeRepository.cs" />
     <Compile Include="Repository\HypixelRepositoryFile.cs" />
     <Compile Include="Repository\IHypixelRepository.cs" />
     <Compile Include="ViewModel\LeaderboardVM.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PlayerDetailVM.cs" />
     <Compile Include="View\Converters\BoolToColor.cs" />
     <Compile Include="View\Converters\BoolToOnlineImage.cs" />
@@ -154,6 +154,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\Offline.png" />
+    <Resource Include="Resources\Images\Online.png" />
     <Resource Include="Resources\Images\YinYang.png" />
   </ItemGroup>
   <ItemGroup>
@@ -167,10 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\clock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Offline.png" />
-    <Resource Include="Resources\Images\Online.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Arcade.png" />

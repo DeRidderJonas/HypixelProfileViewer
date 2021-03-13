@@ -50,7 +50,9 @@
                Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="#555" CornerRadius="10">
+                    <Button Background="#555" 
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.OnPlayerSelectedCommand}"
+                            CommandParameter="{Binding Uuid}">
                       <Grid ShowGridLines="False" Margin="10" HorizontalAlignment="Stretch" >
                         <Grid.ColumnDefinitions>
                           <ColumnDefinition/>
@@ -61,7 +63,7 @@
                           <TextBlock  Text="{Binding DisplayName}" HorizontalAlignment="Stretch"/>
                         </Viewbox>
                       </Grid>
-                    </Border>
+                    </Button>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using Project_DeRidderJonas_HypixelApi.Model;
 using Project_DeRidderJonas_HypixelApi.Repository;
 using System;
@@ -12,6 +13,13 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
     class PlayerDetailVM : ViewModelBase
     {
         private IHypixelRepository _hypixelRepository = new HypixelRepositoryFile();
+
+        private string _uuid;
+
+        public string UUID {
+            get { return _uuid; }
+            set { _uuid = value; RaisePropertyChanged("UUID"); UpdatePlayer(); }
+        }
 
         private Player _currentPlayer;
 
@@ -49,9 +57,28 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             GameModeStatistics = await _hypixelRepository.GetStatisticsForGameMode(_SelectedGameMode);
         }
 
+        private async void UpdatePlayer()
+        {
+            CurrentPlayer = await _hypixelRepository.GetPlayerInfoAsync();
+        }
+
         private async void UpdateGameModeStats()
         {
             GameModeStatistics = await _hypixelRepository.GetStatisticsForGameMode(_SelectedGameMode);
+        }
+
+        private RelayCommand _backCommand;
+
+        public RelayCommand BackCommand {
+            get {
+                if (_backCommand == null) _backCommand = new RelayCommand(GoBack);
+                return _backCommand;
+            }
+        }
+
+        private void GoBack()
+        {
+            (App.Current.MainWindow.DataContext as MainViewModel)?.SwitchPage();
         }
     }
 }

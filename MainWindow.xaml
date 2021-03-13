@@ -1,13 +1,20 @@
 ﻿<Window x:Class="Project_DeRidderJonas_HypixelApi.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:view="clr-namespace:Project_DeRidderJonas_HypixelApi.View"
+        xmlns:VM="clr-namespace:Project_DeRidderJonas_HypixelApi.ViewModel"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project_DeRidderJonas_HypixelApi"
         mc:Ignorable="d"
         Title="MainWindow" Background="#333" MinHeight="450" Height="650" MinWidth="750" Width="1000">
+    <Window.DataContext>
+      <VM:MainViewModel/>
+    </Window.DataContext>
+    
     <Window.Content>
-      <view:LeaderboardPage/>
+        <Grid>
+            <Frame NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+        </Grid>
     </Window.Content>
 </Window>

@@ -122,6 +122,14 @@
             </Viewbox>
         </Grid>
 
+        <Viewbox Grid.Row="1" VerticalAlignment="Top" Margin="25 0 0 0">
+            <Button  MaxHeight="30" Background="Transparent" Command="{Binding BackCommand}">
+                <TextBlock Text="Back to leaderboard" VerticalAlignment="Center" 
+                           TextDecorations="Underline"/>
+            </Button>
+        </Viewbox>
+
+
         <!--General Stats-->
         <Grid ShowGridLines="False" Grid.Row="1" Grid.ColumnSpan="4" Margin="20 10">
             <Grid.RowDefinitions>
