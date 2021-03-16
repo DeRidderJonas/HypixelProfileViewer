@@ -152,6 +152,7 @@
     <EmbeddedResource Include="Resources\Data\HypixelOnline.json" />
     <EmbeddedResource Include="Resources\Data\Leaderboards.json" />
     <EmbeddedResource Include="Resources\Data\HypixelUser2.json" />
+    <EmbeddedResource Include="Resources\Data\HypixelOnline2.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

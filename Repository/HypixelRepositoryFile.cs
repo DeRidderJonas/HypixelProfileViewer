@@ -16,6 +16,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
         static private string _playerJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.HypixelUser.json";
         static private string _player2JsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.HypixelUser2.json";
         static private string _onlineJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.HypixelOnline.json";
+        static private string _online2JsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.HypixelOnline2.json";
         static private string _leaderboardJsonResourceName = "Project_DeRidderJonas_HypixelApi.Resources.Data.Leaderboards.json";
 
         static private string _creatorUUID = "746b0410b2e347e7ad05a5473d35c097";
@@ -103,7 +104,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
-            using(Stream stream = assembly.GetManifestResourceStream(_onlineJsonResourceName))
+            using(Stream stream = assembly.GetManifestResourceStream(_uuid == _creatorUUID ? _onlineJsonResourceName : _online2JsonResourceName))
             {
                 using(var reader = new StreamReader(stream))
                 {
