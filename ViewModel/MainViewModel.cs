@@ -12,8 +12,8 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
-        private IHypixelRepository _repo = new HypixelRepositoryFile();
-        //private IHypixelRepository _repo = new HypixelRepositoryWeb();
+        //private IHypixelRepository _repo = new HypixelRepositoryFile();
+        private IHypixelRepository _repo = new HypixelRepositoryWeb();
         public LeaderboardPage LeaderboardPage { get; } = new LeaderboardPage();
         public PlayerDetailPage PlayerDetailPage { get; } = new PlayerDetailPage();
 
