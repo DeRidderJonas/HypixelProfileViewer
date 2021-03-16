@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using Project_DeRidderJonas_HypixelApi.Repository;
 using Project_DeRidderJonas_HypixelApi.View;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
+        //private IHypixelRepository _repo = new HypixelRepositoryFile();
+        private IHypixelRepository _repo = new HypixelRepositoryWeb();
         public LeaderboardPage LeaderboardPage { get; } = new LeaderboardPage();
         public PlayerDetailPage PlayerDetailPage { get; } = new PlayerDetailPage();
 
@@ -21,10 +24,22 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             set { _currentPage = value; RaisePropertyChanged("CurrentPage"); }
         }
 
+        private string _errorMessage = "Something went wrong";
+
+        public string ErrorMessage {
+            get { return _errorMessage; }
+            set { _errorMessage = value; }
+        }
+
+
         public MainViewModel()
         {
+            (PlayerDetailPage.DataContext as PlayerDetailVM).Repository = _repo;
+            (LeaderboardPage.DataContext as LeaderboardVM).Repository = _repo;
+            
             CurrentPage = LeaderboardPage;
             //CurrentPage = PlayerDetailPage;
+
         }
 
         public void SwitchPage()

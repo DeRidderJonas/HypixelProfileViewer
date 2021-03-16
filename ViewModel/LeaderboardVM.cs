@@ -7,12 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Project_DeRidderJonas_HypixelApi.ViewModel
 {
     class LeaderboardVM : ViewModelBase
     {
-        private IHypixelRepository _hypixelRepository = new HypixelRepositoryWeb();
+        private IHypixelRepository _repo;
+
+        public IHypixelRepository Repository {
+            get { return _repo; }
+            set { _repo = value; InitializeValues(); }
+        }
+
 
         public List<GameMode> GameModes { get; } = GameModeRepository.GetGameModes();
 
@@ -32,21 +39,37 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
 
         public string UUID { get; set; }
 
+        private string _errorMessage;
+
+        public string ErrorMessage {
+            get { return _errorMessage; }
+            set { _errorMessage = value; RaisePropertyChanged("ErrorMessage"); RaisePropertyChanged("ErrorMessageVisible"); }
+        }
+
+        public Visibility ErrorMessageVisible { get { return string.IsNullOrEmpty(_errorMessage) ? Visibility.Hidden : Visibility.Visible; } }
+
         public LeaderboardVM()
         {
             _selectedGameMode = GameModes[0];
-            InitializeValues();
         }
 
-        private async void InitializeValues()
+        private void InitializeValues()
         {
-            CurrentLeaderboard = await _hypixelRepository.GetLeaderboardForGameMode(_selectedGameMode);
+            UpdateLeaderboard();
         }
 
         private async void UpdateLeaderboard()
         {
-            CurrentLeaderboard = await _hypixelRepository.GetLeaderboardForGameMode(_selectedGameMode);
+            try
+            {
+                CurrentLeaderboard = await _repo.GetLeaderboardForGameMode(_selectedGameMode);
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = $"Something went wrong when gathering leaderboard data. \nError message for technicians: \n{e.Message}";
+            }
         }
+
 
         private RelayCommand<string> _onPlayerSelectedCommand;
 

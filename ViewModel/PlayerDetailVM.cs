@@ -7,12 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Project_DeRidderJonas_HypixelApi.ViewModel
 {
     class PlayerDetailVM : ViewModelBase
     {
-        private IHypixelRepository _hypixelRepository = new HypixelRepositoryWeb();
+        private IHypixelRepository _repo;
+
+        public IHypixelRepository Repository {
+            get { return _repo; }
+            set { _repo = value; InitializeValues(); }
+        }
+
 
         private string _uuid = "746b0410b2e347e7ad05a5473d35c097";
 
@@ -44,27 +51,54 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             set { _gameModeStats = value; RaisePropertyChanged("GameModeStatistics"); }
         }
 
+        private string _errorMessage;
+
+        public string ErrorMessage {
+            get { return _errorMessage; }
+            set { _errorMessage = value; RaisePropertyChanged("ErrorMessage"); RaisePropertyChanged("ErrorMessageVisible"); RaisePropertyChanged("StatsVisibility"); }
+        }
+
+        public Visibility ErrorMessageVisible { get { return string.IsNullOrEmpty(_errorMessage) ? Visibility.Hidden : Visibility.Visible; } }
+        public Visibility StatsVisibility { get { return string.IsNullOrEmpty(_errorMessage) ? Visibility.Visible : Visibility.Hidden; } }
 
         public PlayerDetailVM()
         {
             _SelectedGameMode = GameModes[0];
-            InitializeValues();
         }
 
         private async void InitializeValues()
         {
-            CurrentPlayer = await _hypixelRepository.GetPlayerInfoAsync(_uuid);
-            GameModeStatistics = await _hypixelRepository.GetStatisticsForGameMode(_SelectedGameMode);
+            UpdatePlayer();
         }
 
         private async void UpdatePlayer()
         {
-            CurrentPlayer = await _hypixelRepository.GetPlayerInfoAsync(_uuid);
+            ErrorMessage = "";
+            try
+            {
+                CurrentPlayer = await _repo.GetPlayerInfoAsync(_uuid);
+                UpdateGameModeStats();
+            }
+            catch (Exception e)
+            {
+                CurrentPlayer = new Player();
+                _gameModeStats = new HungerGamesStatistics();
+                ErrorMessage = $"Something went wrong when reading player data\nError message for technicians:\n{e.Message}";
+            }
         }
 
         private async void UpdateGameModeStats()
         {
-            GameModeStatistics = await _hypixelRepository.GetStatisticsForGameMode(_SelectedGameMode);
+            try
+            {
+                GameModeStatistics = await _repo.GetStatisticsForGameMode(_SelectedGameMode);
+            }
+            catch (Exception e)
+            {
+                if (!string.IsNullOrEmpty(_errorMessage)) return;
+                _gameModeStats = new HungerGamesStatistics();
+                ErrorMessage = $"Something went wrong when reading game mode statistics\nError message for technicians:\n{e.Message}";
+            }
         }
 
         private RelayCommand _backCommand;

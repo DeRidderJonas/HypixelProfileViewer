@@ -18,6 +18,10 @@
       <Style TargetType="TextBlock" x:Key="GameModeTitle">
           <Setter Property="Foreground" Value="#ccc"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="ErrorMessage">
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
     </Page.Resources>
 
     <Grid ShowGridLines="False">
@@ -56,8 +60,11 @@
               <Image Margin="5" Source="https://cravatar.eu/avatar/assyrial64"/>
             </Button>
         </Grid>
+        <Viewbox Grid.Column="1" Grid.Row="1" Margin="10">
+          <TextBlock Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisible}" Style="{StaticResource ErrorMessage}"/>
+        </Viewbox>
         <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CurrentLeaderboard.Players}"
-               Background="Transparent" BorderThickness="0" 
+               Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Stretch"
                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -69,7 +76,7 @@
                           <ColumnDefinition/>
                           <ColumnDefinition Width="7*"/>
                         </Grid.ColumnDefinitions>
-                        <Image MinWidth="100" MinHeight="100" Source="{Binding Uuid, Converter={StaticResource UuidToImage}, FallbackValue=/Resources/Images/steve.png}"/>
+                        <Image MinWidth="100" MinHeight="100" HorizontalAlignment="Left" Source="{Binding Uuid, Converter={StaticResource UuidToImage}, FallbackValue=Resources/Images/steve.png}"/>
                         <Viewbox Grid.Column="1" Margin="10">
                           <TextBlock Text="{Binding DisplayName}" HorizontalAlignment="Stretch"/>
                         </Viewbox>
@@ -77,11 +84,11 @@
                     </Button>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            <ListBox.ItemsPanel>
+            <!--<ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                  <WrapPanel Orientation="Horizontal"/>
+                  --><!--<WrapPanel Orientation="Horizontal"/>--><!--
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+            </ListBox.ItemsPanel>-->
         </ListBox>
 
     </Grid>

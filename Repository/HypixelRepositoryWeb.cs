@@ -51,7 +51,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
                 catch (Exception e)
                 {
                     Console.WriteLine($"HypixelRepositoryWeb::GetLeaderboards > {e.Message}");
-                    throw;
+                    throw e;
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
                 catch (Exception e)
                 {
                     Console.WriteLine($"HypixelRepositoryWeb::GetPlayerName > {e.Message}");
-                    throw;
+                    throw e;
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
                 catch (Exception e)
                 {
                     Console.WriteLine($"HypixelRepositoryWeb::GetPlayerInfoAsync > {e.Message}");
-                    throw;
+                    throw e;
                 }
             }
         }
@@ -176,7 +176,7 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
                 catch (Exception e)
                 {
                     Console.WriteLine($"HypixelRepositoryWeb::GetPlayerOnlineStatus > {e.Message}");
-                    throw;
+                    throw e;
                 }
             }
         }

@@ -73,6 +73,10 @@
           <Setter Property="RadiusY" Value="2"/>
           <Setter Property="Fill" Value="#777"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="ErrorMessage">
+          <Setter Property="Foreground" Value="Red"/>
+          <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
     </Page.Resources>
     <Page.DataContext>
       <VM:PlayerDetailVM/>
@@ -129,9 +133,9 @@
             </Button>
         </Viewbox>
 
-
+        
         <!--General Stats-->
-        <Grid ShowGridLines="False" Grid.Row="1" Grid.ColumnSpan="4" Margin="20 10">
+        <Grid ShowGridLines="False" Grid.Row="1" Grid.ColumnSpan="4" Margin="20 10" Visibility="{Binding StatsVisibility}">
             <Grid.RowDefinitions>
               <RowDefinition/>
               <RowDefinition Height="4*"/>
@@ -183,10 +187,13 @@
                 </Grid>
             </Grid>
         </Grid>
+        <Viewbox Grid.Row="1" Grid.ColumnSpan="6" Margin="10">
+          <TextBlock Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisible}" Style="{StaticResource ErrorMessage}"/>
+        </Viewbox>
 
         <!--Game stats-->
         <Border Grid.Column="4" Grid.ColumnSpan="2" Grid.RowSpan="2" 
-                Margin="20 20"
+                Margin="20 20" Visibility="{Binding StatsVisibility}"
                 Background="#444" BorderBrush="#111" BorderThickness="3">
             <Grid ShowGridLines="False">
                 <Grid.RowDefinitions>
