@@ -68,16 +68,17 @@ namespace Project_DeRidderJonas_HypixelApi.Model
                     ++level;
                     experienceNeededToNextLevel = (level - 2) * 2500 + 10000;
                 }
-                return level;
+                return level-1;
             }
         }
 
         [JsonIgnore]
         public double NetworkLevelExperience { get {
                 double currExperience = 10000;
-                for (int i = 3; i < CurrentNetworkLevel; i++)
+                int currentNetworkLevel = CurrentNetworkLevel;
+                for (int i = 3; i < currentNetworkLevel+1; i++)
                 {
-                    currExperience += (i - 2) * 2500;
+                    currExperience += (i - 2) * 2500 + 10000;
                 }
                 return currExperience;
             } 
@@ -91,13 +92,16 @@ namespace Project_DeRidderJonas_HypixelApi.Model
 
         [JsonIgnore]
         public double NextNetworkLevelExperience { get {
-                return NetworkLevelExperience + (NextNetworkLevel - 2) * 2500;
+                return NetworkLevelExperience + (NextNetworkLevel - 2) * 2500 + 10000;
             } 
         }
 
         [JsonIgnore]
         public float LevelExperiencePercentage { get {
-                return (float)(NetworkExperience / NextNetworkLevelExperience);
+                double nextLevelNeeded = (NextNetworkLevel - 2) * 2500 + 10000;
+                double expToNextLevel = NetworkExperience - NetworkLevelExperience;
+
+                return (float)(expToNextLevel / nextLevelNeeded);
             } 
         }
 

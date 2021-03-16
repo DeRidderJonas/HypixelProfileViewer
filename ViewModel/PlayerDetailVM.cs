@@ -66,7 +66,7 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             _SelectedGameMode = GameModes[0];
         }
 
-        private async void InitializeValues()
+        private void InitializeValues()
         {
             UpdatePlayer();
         }

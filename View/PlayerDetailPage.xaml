@@ -15,6 +15,7 @@
       <conv:BoolToOnlineImage x:Key="BoolToOnlineImage"/>
       <conv:BoolToOnlineString x:Key="BoolToOnlineString"/>
       <conv:BoolToColor x:Key="BoolToColor"/>
+      <conv:FloatToIntPercentage x:Key="FloatToIntPercentage"/>
       <Style TargetType="TextBlock" x:Key="DisplayName">
           <Setter Property="FontSize" Value="45"/>
           <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -126,6 +127,7 @@
             </Viewbox>
         </Grid>
 
+        <!--Back button-->
         <Viewbox Grid.Row="1" VerticalAlignment="Top" Margin="25 0 0 0">
             <Button  MaxHeight="30" Background="Transparent" Command="{Binding BackCommand}">
                 <TextBlock Text="Back to leaderboard" VerticalAlignment="Center" 
@@ -183,10 +185,12 @@
                     </Grid.ColumnDefinitions>
                       <TextBlock Grid.Column="0" Text="{Binding CurrentPlayer.CurrentNetworkLevel}" Style="{StaticResource StatsValue}" HorizontalAlignment="Left"/>
                       <TextBlock Grid.Column="2" Text="{Binding CurrentPlayer.NextNetworkLevel}" Style="{StaticResource StatsValue}"/>
-                      <ProgressBar Grid.Column="1" HorizontalAlignment="Stretch" Margin="0 15" Value="{Binding CurrentPlayer.LevelExperiencePercentage, Mode=OneWay}"/>
+                      <ProgressBar Grid.Column="1" HorizontalAlignment="Stretch" Margin="0 15" Minimum="0" Maximum="100" Value="{Binding CurrentPlayer.LevelExperiencePercentage, Mode=OneWay, Converter={StaticResource FloatToIntPercentage}}"/>
                 </Grid>
             </Grid>
         </Grid>
+        
+        <!--Error message-->
         <Viewbox Grid.Row="1" Grid.ColumnSpan="6" Margin="10">
           <TextBlock Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisible}" Style="{StaticResource ErrorMessage}"/>
         </Viewbox>
