@@ -34,7 +34,7 @@
           <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <ListBox ItemsSource="{Binding GameModes}" Background="Transparent" BorderThickness="0" 
-                 SelectedItem="{Binding SelectedGameMode}" HorizontalAlignment="Stretch"
+                 SelectedItem="{Binding SelectedGameMode}" HorizontalAlignment="Stretch" SelectionChanged="ScrollToTop"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -63,7 +63,7 @@
         <Viewbox Grid.Column="1" Grid.Row="1" Margin="10">
           <TextBlock Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisible}" Style="{StaticResource ErrorMessage}"/>
         </Viewbox>
-        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CurrentLeaderboard.Players}"
+        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding CurrentLeaderboard.Players}" x:Name="lstPlayer"
                Background="Transparent" BorderThickness="0" HorizontalContentAlignment="Stretch"
                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>

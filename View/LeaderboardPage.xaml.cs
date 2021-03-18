@@ -23,6 +23,17 @@ namespace Project_DeRidderJonas_HypixelApi.View
         public LeaderboardPage()
         {
             InitializeComponent();
+
+
+        }
+
+        private void ScrollToTop(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstPlayer == null) return;
+
+            var enumerator = lstPlayer.ItemsSource.GetEnumerator();
+            enumerator.MoveNext();
+            lstPlayer.ScrollIntoView(enumerator.Current);
         }
     }
 }
