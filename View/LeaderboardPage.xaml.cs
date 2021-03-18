@@ -23,8 +23,6 @@ namespace Project_DeRidderJonas_HypixelApi.View
         public LeaderboardPage()
         {
             InitializeComponent();
-
-
         }
 
         private void ScrollToTop(object sender, SelectionChangedEventArgs e)

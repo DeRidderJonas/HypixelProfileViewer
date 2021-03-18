@@ -13,7 +13,7 @@ namespace Project_DeRidderJonas_HypixelApi.View.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan? timespan = value as TimeSpan?;
-            if (timespan == null) return "No time span";
+            if (timespan == null || timespan?.TotalSeconds <= 0) return "Not available";
 
             StringBuilder stringBuilder = new StringBuilder();
             if (timespan?.Days > 0) stringBuilder.Append($"{timespan?.Days}d");

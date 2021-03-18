@@ -7,7 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project_DeRidderJonas_HypixelApi"
         mc:Ignorable="d"
-        Title="MainWindow" Background="#333" MinHeight="450" Height="650" MinWidth="750" Width="1000">
+        Title="Hypixel Leaderboard" Background="#333" MinHeight="450" Height="650" MinWidth="750" Width="1000">
     <Window.DataContext>
       <VM:MainViewModel/>
     </Window.DataContext>

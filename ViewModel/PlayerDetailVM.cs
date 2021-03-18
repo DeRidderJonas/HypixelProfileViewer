@@ -76,13 +76,15 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             ErrorMessage = "";
             try
             {
+                CurrentPlayer = new Player() { DisplayName = "Loading" };
+                GameModeStatistics = new HungerGamesStatistics();
                 CurrentPlayer = await _repo.GetPlayerInfoAsync(_uuid);
                 UpdateGameModeStats();
             }
             catch (Exception e)
             {
                 CurrentPlayer = new Player();
-                _gameModeStats = new HungerGamesStatistics();
+                GameModeStatistics = new HungerGamesStatistics();
                 ErrorMessage = $"Something went wrong when reading player data\nError message for technicians:\n{e.Message}";
             }
         }
@@ -96,7 +98,7 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             catch (Exception e)
             {
                 if (!string.IsNullOrEmpty(_errorMessage)) return;
-                _gameModeStats = new HungerGamesStatistics();
+                GameModeStatistics = new HungerGamesStatistics();
                 ErrorMessage = $"Something went wrong when reading game mode statistics\nError message for technicians:\n{e.Message}";
             }
         }

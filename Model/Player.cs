@@ -43,10 +43,10 @@ namespace Project_DeRidderJonas_HypixelApi.Model
         }
 
         [JsonProperty(PropertyName = "timePlaying")]
-        public int TimePlayed { get; set; }
+        public long TimePlayed { get; set; }
         [JsonIgnore]
         public TimeSpan TimePlayedTS { get {
-                return new TimeSpan(0, TimePlayed, 0);
+                return new TimeSpan(0, (int)TimePlayed, 0);
             } 
         }
         //Experience

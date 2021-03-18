@@ -24,22 +24,12 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
             set { _currentPage = value; RaisePropertyChanged("CurrentPage"); }
         }
 
-        private string _errorMessage = "Something went wrong";
-
-        public string ErrorMessage {
-            get { return _errorMessage; }
-            set { _errorMessage = value; }
-        }
-
-
         public MainViewModel()
         {
             (PlayerDetailPage.DataContext as PlayerDetailVM).Repository = _repo;
             (LeaderboardPage.DataContext as LeaderboardVM).Repository = _repo;
             
             CurrentPage = LeaderboardPage;
-            //CurrentPage = PlayerDetailPage;
-
         }
 
         public void SwitchPage()
@@ -52,7 +42,10 @@ namespace Project_DeRidderJonas_HypixelApi.ViewModel
                 (PlayerDetailPage.DataContext as PlayerDetailVM).UUID = selectedUUID;
                 CurrentPage = PlayerDetailPage;
             }
-            else CurrentPage = LeaderboardPage;
+            else
+            {
+                CurrentPage = LeaderboardPage;
+            }
         }
     }
 }
