@@ -98,6 +98,9 @@ namespace Project_DeRidderJonas_HypixelApi.Repository
 
                     string json = await response.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<JArray>(json);
+                    if (result == null)
+                        return "";
+
                     int namesCount = result.Count;
 
                     return result.ElementAt(namesCount - 1).SelectToken("name").ToObject<string>();

@@ -27,7 +27,7 @@ namespace Project_DeRidderJonas_HypixelApi.View
 
         private void ScrollToTop(object sender, SelectionChangedEventArgs e)
         {
-            if (lstPlayer == null) return;
+            if (lstPlayer == null || lstPlayer.Items.Count == 0) return;
 
             var enumerator = lstPlayer.ItemsSource.GetEnumerator();
             enumerator.MoveNext();
